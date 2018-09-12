@@ -1,0 +1,43 @@
+<?php
+/**
+ * @project: CartServiceMigrate
+ * @author : LitExtension
+ * @url    : http://litextension.com
+ * @email  : litextension@gmail.com
+ */
+?>
+<?php
+$list = $block->getApiData();
+if(!$list){
+    $list = $block->getApiInfoOfFirstCart();
+}
+?>
+<?php if(!$list){?>
+    No Api Info.
+<?php } else {?>
+    <?php foreach($list as $api_key => $api_label){?>
+        <div class="le-form-fields">
+            <div class="label-fields">
+                <p>
+                    <label><?php echo $api_label; ?>:
+                        <span class="required">*</span>
+                    </label>
+                </p>
+            </div>
+            <div class="input-field">
+                <input type="text" name="api[<?php echo $api_key; ?>]" id="api-<?php echo $api_key; ?>" class="required input-text"/>
+            </div>
+        </div>
+    <?php }?>
+    <div class="le-form-fields">
+        <div class="label-fields">
+            <p>
+                <label>
+                </label>
+            </p>
+        </div>
+        <div class="input-field">
+            <div id="error-api" class="validation-advice error-custom"><?php echo __('API info is not correct'); ?></div>
+        </div>
+    </div>
+<?php } ?>

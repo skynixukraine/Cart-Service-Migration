@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="lecsm" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Cart Service Migration</label>
+            <tab>litextension</tab>
+            <resource>LitExtension_CartServiceMigration::system_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Setting</label>
+                <field id="taxes" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Taxes Per Batch</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10</validate>
+                </field>
+                <field id="manufacturers" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Manufacturers Per Batch</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10</validate>
+                </field>
+                <field id="categories" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Categories Per Batch</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10</validate>
+                </field>
+                <field id="products" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Products Per Batch</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10</validate>
+                </field>
+                <field id="customers" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customers Per Batch</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10</validate>
+                </field>
+                <field id="orders" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Orders Per Batch</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10</validate>
+                </field>
+                <field id="reviews" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reviews Per Batch</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-10</validate>
+                </field>
+                <field id="delay" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delay Time</label>
+                    <comment>Unit is second.</comment>
+                    <validate>required-entry validate-number</validate>
+                </field>
+                <field id="retry" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto Retry After</label>
+                    <comment>Unit is second, 0 = disabled.</comment>
+                    <validate>required-entry validate-number</validate>
+                </field>
+                <field id="license" translate="label" type="textarea" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>License Key</label>
+                    <validate>required-entry</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

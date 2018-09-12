@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>LitExtension Cart Service Migration</title>
+        <css src="LitExtension_CartServiceMigration::css/styles.css"/>
+    </head>
+    <body>
+        <referenceBlock name="menu">
+            <action method="setActive">
+                <argument name="itemId" xsi:type="string">LitExtension_CartServiceMigration::lecsm_process</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="page.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">LitExtension Cart Service Migration</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="LitExtension\CartServiceMigration\Block\Adminhtml\Index" name="lecsm.index" template="index.phtml">
+                <block class="LitExtension\CartServiceMigration\Block\Adminhtml\Index" name="lecsm.resume" template="resume.phtml"/>
+                <block class="LitExtension\CartServiceMigration\Block\Adminhtml\Index" name="lecsm.setup" template="setup.phtml">
+                    <block class="LitExtension\CartServiceMigration\Block\Adminhtml\Index" name="lecsm.api" template="api.phtml"/>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

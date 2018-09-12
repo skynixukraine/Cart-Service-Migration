@@ -1,0 +1,105 @@
+<?php
+/**
+ * @project: CartServiceMigration
+ * @author : LitExtension
+ * @url    : http://litextension.com
+ * @email  : litextension@gmail.com
+ */
+?>
+<?php $notice = $block->getNotice(); ?>
+<script type="text/javascript">
+    require(['jquery'],function($){
+        $(document).ready(function(){
+            $("#lecm-tips > li:gt(0)").hide(0);
+            setInterval(function() {
+                $('#lecm-tips > li:first')
+                    .fadeOut(1000)
+                    .next()
+                    .fadeIn(1000)
+                    .end()
+                    .appendTo('#lecm-tips');
+            },  10000);
+        });
+    })
+</script>
+<form action="" method="post" id="form-import">
+    <input type="hidden" name="action" value="finish"/>
+    <div class="le-container">
+        <div style="font-weight: bold;">Migration is in progress! Please do not close your browser or remove Source Cart Connector file during the migration.</div>
+
+        <div style="margin: 10px 0;">
+            <p>Source cart: <strong><?php echo $notice['config']['cart_url']; ?></strong></p>
+            <?php
+                $limit = $notice['config']['limit'];
+                if(is_string($limit)){
+                    $limit = ucfirst($limit);
+                }
+            ?>
+            <p>Entity limit: <strong><?php echo $limit; ?></strong></p>
+        </div>
+
+        <ul id="lecm-tips">
+            <li class="tips-checkdata" style="display: block;"><span>Some of migrated data may not be properly displayed at storefront right after migration due to configuration peculiarities. Thus, it is highly recommended to check Migration results at the store backend.</span></li>
+            <li class="tips-backup" style="display: none;"><span>You should make a backup of your store before Migration.</span></li>
+            <li class="tips-clear" style="display: none;"><span>You can clear your Target Store data automatically before proceeding with Full Migration.</span></li>
+            <li class="tips-stop" style="display: none;"><span>You can stop Migration anytime by refreshing this page, it will take you back to Step 1 which now has a "Resume" button.</span></li>
+            <li class="tips-seo" style="display: none;"><span>The tool has "SEO Plugin" allowing you to migrate SEO URL's from your Source Store to Magento.</span></li>
+            <li class="tips-customfields" style="display: none;"><span>The tool also provide "Custom Fields Plugin" which allows you to migrate all your custom fields from your Source Store to Magento.</span></li>
+        </ul>
+        <br />
+        <?php if($notice['config']['add_option']['clear_data'] && !$notice['is_running']){ ?>
+            <div id="process-clear-data">
+                <p>
+                    <img src="<?php echo $block->getViewFileUrl('LitExtension_CartServiceMigration::images/loader-small.gif');?>"/>
+                    <?php echo __('Clearing store ...');?>
+                </p>
+            </div>
+        <?php } ?>
+
+        <?php
+        $entities = array(
+            'taxes' => 'Taxes',
+            'manufacturers' => 'Manufacturers',
+            'categories' => 'Categories',
+            'products' => 'Products',
+            'customers' => 'Customers',
+            'orders' => 'Orders',
+            'reviews' => 'Reviews',
+        );
+        ?>
+
+        <?php foreach($entities as $entity_value => $entity_label): ?>
+            <?php if($notice['config']['import'][$entity_value]): ?>
+                <div id="process-<?php echo $entity_value; ?>" class="process-wrap">
+                    <div class="process-name"><?php echo __($entity_label);?></div>
+                    <div class="process-content">
+                        <p class="process-bar">
+                            <span class="process-bar-width" style="width: <?php echo $notice[$entity_value]['point'] ?>%;"></span>
+                        </p>
+                        <p class="console-log"><?php echo 'Imported: '.$notice[$entity_value]['imported'].'/'.$notice[$entity_value]['total'].', Errors: '.$notice[$entity_value]['error'] ?></p>
+                    </div>
+                    <div class="clear-both"></div>
+                    <div class="try-import">
+                        <div id="try-import-<?php echo $entity_value; ?>"><?php echo __('Retry');?></div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <div id="lecm-import-log" class="lecm-console-log-wrap">
+            <div class="lecm-log-title"><?php echo __('Console');?></div>
+            <div class="lecm-console-log">
+                <?php echo $notice['msg_start']; ?>
+            </div>
+        </div>
+        <div class="le-submit">
+            <div id="form-import-loading" class="form-loading"><?php echo __('Processing ...')?></div>
+            <div id="form-import-submit" class="lecm-submit" style="display: none;">
+                <a href="javascript:void(0)" class="le-button"><?php echo __('Clear Cache & Reindex Data') ?></a>
+            </div>
+            <div id="try-import-not-clear" class="lecm-submit" style="display: none;">
+                <a href="javascript:void(0)" class="le-button"><?php echo __('Retry') ?></a>
+            </div>
+        </div>
+    </div>
+</form>

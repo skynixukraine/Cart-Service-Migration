@@ -1,0 +1,82 @@
+<?php
+/**
+ * @project: CartServiceMigration
+ * @author : LitExtension
+ * @url    : http://litextension.com
+ * @email  : litextension@gmail.com
+ */
+?>
+<?php $notice = $block->getNotice(); ?>
+<form action="" method="post" id="form-setup">
+    <input type="hidden" name="action" value="setup"/>
+    <?php if(\LitExtension\CartServiceMigration\Model\Cart::DEMO_MODE): ?>
+        <div class="section_guide">
+            <h2>Migration Demo</h2>
+            <div>
+                <p><b>1.</b> This is demo migration therefore we <b>limit the number of entities which can be migrated of Product, Category,
+                        Customer, Order to 10</b> as well as disable some extensive options.</p>
+                <p><b>2.</b> <b>You have full privileges to delete your migrated data</b> on this demo magento store, for any confidential reasons.</p>
+                <p><b>3.</b> If by some case the module does not work as expected with your Source Store, <b>we can help you fix that</b>,
+                    please <a target="blank" href="http://litextension.com/contacts/">"contact us"</a> to let us know your case, thank you!</p>
+                <p></p>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if($block->_checkShowWarning()){ ?>
+    <div class="lecm-warning" style="text-align: left;">
+        <p><strong>Warning:</strong></p>
+        <?php if(!$block->_checkFolderMediaPermission()){ ?><p> - Folder "media" is not writable, images could not be saved!</p><?php } ?>
+        <?php if(!$block->_checkAllowUrlFOpen()){ ?><p> - PHP variable allow_url_fopen = Off, need to change to allow_url_fopen = On, please click <a href="https://www.google.com/?gws_rd=ssl#q=allow_url_fopen+php" target="_blank">here</a> for detail</p><?php } ?>
+        <?php if(!$block->_getConfig('system/smtp/disable')){?><p> - You have email notification turned on, this can send welcome emails to your customers during migration, it is recommended to turn it off and turn back on when migration is completed. To turn it off: Stores > Configuration > Advanced Tab > System > Mail Sending Settings > Disable Email Communications = "Yes"</p><?php } ?>
+    </div>
+    <?php } ?>
+    <div class="le-container">
+        <div id="le-guide">
+            <?php echo $block->getGuideOfFirstCart(); ?>
+        </div>
+        <div class="le-form-fields">
+            <div class="label-fields">
+                <p>
+                    <label for="token"><?php echo __("Cart Type:"); ?>
+                        <span class="required">*</span>
+                    </label>
+                </p>
+            </div>
+            <div class="input-fields">
+                <p>
+                    <select id="cart_type" name="cart_type" class="required input-text select admin__control-select">
+                        <?php echo $block->getCartsOption($notice['config']['cart_type']);?>
+                    </select>
+                    <span class="success-icon"></span>
+                </p>
+                <div id="error-cart" class="validation-advice error-custom"><?php echo __('Cart type is not correct!'); ?></div>
+            </div>
+        </div>
+        <div class="le-form-fields">
+            <div class="label-fields">
+                <p>
+                    <label for="source-cart-url"><?php echo __("Cart Url"); ?>:<span class="required">*</span></label>
+                </p>
+            </div>
+            <div class="input-fields">
+                <p>
+                    <input type="text" id="source-cart-url" name="cart_url" value="<?php echo $notice['config']['cart_url']; ?>"
+                           class="source-cart-url required input-text validate-url"/>
+                    <span class="success-icon"></span>
+                <p style="font-size: 11px;">Please enter correct Source Cart Url as it will be registered as the migration domain.</p>
+                </p>
+                <div id="error-url" class="validation-advice error-custom"><?php echo __('Can not reach connector!'); ?></div>
+            </div>
+        </div>
+        <div id="api-info">
+            <?php echo $block->getChildBlock('lecsm.api')->setApiData($notice['config']['api_data'])->toHtml();?>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="le-submit">
+        <div id="form-setup-loading" class="form-loading"><?php echo __('Connecting...')?> </div>
+        <div id="form-setup-submit" class="lecm-submit">
+            <a href="javascript:void(0)" class="le-button"><?php echo __('Next') ?> &raquo;</a>
+        </div>
+    </div>
+</form>

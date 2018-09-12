@@ -1,0 +1,177 @@
+<?php
+/**
+ * @project: CartServiceMigration
+ * @author : LitExtension
+ * @url    : http://litextension.com
+ * @email  : litextension@gmail.com
+ */
+?>
+<?php
+$notice = $block->getNotice();
+$entities_html = "";
+$entities = array(
+    'taxes' => 'Taxes',
+    'manufacturers' => 'Manufacturers',
+    'categories' => 'Categories',
+    'products' => 'Products',
+    'reviews' => 'Reviews',
+    'customers' => 'Customers',
+    'orders' => 'Orders',
+);
+foreach($notice['config']['import'] as $key => $value){
+    if($value == true){
+        $entities_html .= ' - '.$entities[$key].'<br />';
+    }
+}
+?>
+<form action="" method="post" id="form-confirm">
+    <input type="hidden" name="action" value="confirm">
+    <div class="le-container">
+        <h1><?php echo __("Source Cart"); ?></h1>
+        <div class="le-form-fields">
+            <div class="label-fields">
+                <p><label><?php echo  __("Cart Type"); ?>:</label></p>
+            </div>
+            <div class="input-fields">
+                <p><?php echo $block->getCartTypeByValue($notice['config']['cart_type']); ?></p>
+            </div>
+        </div>
+        <div class="le-form-fields">
+            <div class="label-fields">
+                <p><label><?php echo  __("Cart Url"); ?>:</label></p>
+            </div>
+            <div class="input-fields">
+                <p><?php echo $notice['config']['cart_url']; ?></p>
+            </div>
+        </div>
+
+        <?php if($notice['config']['config_support']['category_map']){ ?>
+        <h1><?php echo __("Root Category"); ?></h1>
+        <?php foreach($notice['config']['category_data'] as $cat_key => $cat_name){ ?>
+            <div class="le-form-fields">
+                <div class="label-fields">
+                    <p><label><?php echo $cat_name; ?></label></p>
+                </div>
+                <div class="input-fields">
+                    <p><?php if(isset($notice['config']['cats'][$cat_key])) echo $block->getCategoryNameById($notice['config']['cats'][$cat_key]); ?></p>
+                </div>
+            </div>
+        <?php }} ?>
+
+        <?php if($notice['config']['config_support']['attribute_map']){ ?>
+        <h1><?php echo __("Product Attribute Set"); ?></h1>
+        <?php foreach($notice['config']['attribute_data'] as $attr_key => $attr_name){ ?>
+            <div class="le-form-fields">
+                <div class="label-fields">
+                    <p><label><?php echo $attr_name; ?>:</label></p>
+                </div>
+                <div class="input-fields">
+                    <p><?php if(isset($notice['config']['attributes'][$attr_key])) echo $block->getAttributeSetNameById($notice['config']['attributes'][$attr_key]); ?></p>
+                </div>
+            </div>
+        <?php }} ?>
+
+        <?php if($notice['config']['config_support']['language_map']){ ?>
+        <h1><?php echo __("Languages Mapping"); ?></h1>
+        <?php foreach($notice['config']['languages_data'] as $lang_id => $lang_name){ ?>
+            <div class="le-form-fields">
+                <div class="label-fields">
+                    <p><label><?php echo $lang_name?></label></p>
+                </div>
+                <div class="input-fields">
+                    <p><?php if(isset($notice['config']['languages'][$lang_id])) echo $block->getStoreNameById($notice['config']['languages'][$lang_id]); ?></p>
+                </div>
+            </div>
+        <?php }} ?>
+
+        <?php if($notice['config']['config_support']['currency_map']){ ?>
+        <h1><?php echo __("Currencies Mapping"); ?></h1>
+        <?php foreach($notice['config']['currencies_data'] as $currency_id => $currency_name){ ?>
+            <div class="le-form-fields">
+                <div class="label-fields">
+                    <p><label><?php echo $currency_name; ?></label></p>
+                </div>
+                <div class="input-fields">
+                    <p><?php if(isset($notice['config']['currencies'][$currency_id])) echo $block->getCurrencyNameByCode($notice['config']['currencies'][$currency_id]); ?></p>
+                </div>
+            </div>
+        <?php }} ?>
+
+        <?php if($notice['config']['config_support']['order_status_map']){ ?>
+        <h1><?php echo __("Orders Status Mapping"); ?></h1>
+        <?php foreach($notice['config']['order_status_data'] as $status_id => $status_name){?>
+            <div class="le-form-fields">
+                <div class="label-fields">
+                    <p><label><?php echo $status_name; ?></label></p>
+                </div>
+                <div class="input-fields">
+                    <p><?php if(isset($notice['config']['order_status'][$status_id])) echo $block->getOrderStatusByValue($notice['config']['order_status'][$status_id]); ?></p>
+                </div>
+            </div>
+        <?php }} ?>
+
+        <?php if($notice['config']['config_support']['country_map']){ ?>
+            <h1><?php echo __("Countries Mapping"); ?></h1>
+            <?php foreach($notice['config']['countries_data'] as $country_key => $country_name){ ?>
+                <div class="le-form-fields">
+                    <div class="label-fields">
+                        <p><label><?php echo $country_name; ?></label></p>
+                    </div>
+                    <div class="input-fields">
+                        <p><?php if(isset($notice['config']['countries'][$country_key])) echo $block->getCountryNameById($notice['config']['countries'][$country_key]); ?></p>
+                    </div>
+                </div>
+            <?php } ?>
+        <?php } ?>
+
+        <?php if($notice['config']['config_support']['customer_group_map']){ ?>
+            <h1><?php echo __("Customer Group Mapping"); ?></h1>
+            <?php foreach($notice['config']['customer_group_data'] as $group_key => $group_name){ ?>
+                <div class="le-form-fields">
+                    <div class="label-fields">
+                        <p><label><?php echo $group_name; ?></label></p>
+                    </div>
+                    <div class="input-fields">
+                        <p><?php if(isset($notice['config']['customer_group'][$group_key])) echo $block->getCustomerGroupCodeById($notice['config']['customer_group'][$group_key]); ?></p>
+                    </div>
+                </div>
+            <?php } ?>
+        <?php  }?>
+
+        <h1><?php echo __("Entities to Migrate"); ?></h1>
+        <div class="le-form-fields">
+            <div class="input-fields">
+                <p><?php echo $entities_html; ?></p>
+            </div>
+        </div>
+
+        <h1><?php echo __("Additional Options"); ?></h1>
+        <div class="le-form-fields">
+            <div class="input-fields">
+                <?php if($notice['config']['add_option']['add_new']){?><p> - <?php echo __("Migrate recent data (adds new entities only)"); ?></p><?php } ?>
+                <?php if($notice['config']['add_option']['clear_data']){?><p> - <?php echo __("Clear current data on Target Store before Migration"); ?></p><?php } ?>
+                <?php if($notice['config']['add_option']['seo_url']){?><p> - <?php echo __("Migrate categories and products SEO URLs"); ?></p><?php } ?>
+                <?php if($notice['config']['add_option']['img_des']){?><p> - <?php echo __("Transfer images in product descriptions to your site"); ?></p><?php } ?>
+                <?php if($notice['config']['add_option']['pre_cus']){?><p> - <?php echo __("Preserve Customer IDs on Target Store"); ?></p><?php } ?>
+                <?php if($notice['config']['add_option']['pre_ord']){?><p> - <?php echo __("Preserve Order IDs on Target Store"); ?></p><?php } ?>
+                <?php if($notice['config']['add_option']['stock']){?><p> - <?php echo __("Ignore stock management for products with quantity = 0"); ?></p><?php } ?>
+            </div>
+        </div>
+
+    </div>
+    <div class="le-submit">
+        <div id="form-confirm-loading" class="form-loading"><?php echo __('Connecting ... ')?></div>
+        <?php if($notice['config']['add_option']['clear_data']){ ?>
+        <div id="lecm-warning-clear" class="lecm-warning"><?php echo __('Warning: all current data of entities selected will be cleared.'); ?></div>
+        <?php } ?>
+        <?php if(!$block->_checkFolderMediaPermission()){?>
+            <div class="lecm-warning"><?php echo __('Warning: folder "media" is not writable, images could not be saved!'); ?></div>
+        <?php } ?>
+        <div id="form-confirm-submit" class="lecm-submit">
+            <a href="javascript:void(0)" class="le-button"><?php echo __('Start Migration') ?></a>
+        </div>
+    </div>
+    <div id="form-confirm-back" class="lecm-submit">
+        <a href="javascript:void(0)" class="">&laquo; <?php echo __('Back to previous Step') ?></a>
+    </div>
+</form>

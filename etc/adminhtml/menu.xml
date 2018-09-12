@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="LitExtension_CartServiceMigration::lecsm" title="Cart Service Migration" module="LitExtension_CartServiceMigration" sortOrder="10" parent="LitExtension_Core::le" resource="LitExtension_CartServiceMigration::lecsm"/>
+        <add id="LitExtension_CartServiceMigration::lecsm_process" title="Cart Service Migration" module="LitExtension_CartServiceMigration" sortOrder="10" parent="LitExtension_CartServiceMigration::lecsm" action="lecsm/index/" resource="LitExtension_CartServiceMigration::lecsm_process"/>
+        <add id="LitExtension_CartServiceMigration::lecsm_config" title="Settings" module="LitExtension_CartServiceMigration" sortOrder="30" parent="LitExtension_CartServiceMigration::lecsm" action="adminhtml/system_config/edit/section/lecsm" resource="LitExtension_CartServiceMigration::lecsm_config"/>
+    </menu>
+</config>
